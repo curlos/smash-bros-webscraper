@@ -23,6 +23,33 @@ def get_all_character_urls(url):
       all_character_urls.append(character_url)
   
   print(all_character_urls)
+  return all_character_urls
+
+def get_character(url):
+
+  character = {
+    "name": '',
+    "costumes": [],
+    "universe": '',
+    "other_playable_appearances": [],
+    "final_smash": ''
+  }
+  page = requests.get(url)
+  soup = BeautifulSoup(page.content, 'html.parser')
+  basic_info_elems = soup.select('.infobox')
+  name_elem = soup.select_one('.infobox th')
+  universe_elem = soup.select_one('.infobox a[title*="universe"]')
+  other_playable_app_elems = soup.select('.infobox a[title*="SSB"] i')
+
+
+  character['name'] = name_elem.get_text().replace('in Super Smash Bros. Ultimate\n', '')
+  character['universe'] = universe_elem.get_text()
+
+  for a in other_playable_app_elems:
+    character['other_playable_appearances'].append(a.get_text())
+  
+  pprint(character)
+  
 
 
 def save_to_json(dictionary, filename):
@@ -37,4 +64,6 @@ def save_to_json(dictionary, filename):
   print('JSON file created!')
 
 
-get_all_character_urls('https://www.ssbwiki.com/Super_Smash_Bros._Ultimate')
+# get_all_character_urls('https://www.ssbwiki.com/Super_Smash_Bros._Ultimate')
+
+get_character('https://www.ssbwiki.com/Mario_(SSBU)')
