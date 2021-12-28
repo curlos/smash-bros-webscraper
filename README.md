@@ -1,4 +1,4 @@
-# smash-bros-webscraper
+# Super Smash Bros. Webscraper
 Gathers data about Super Smash Bros. from https://www.ssbwiki.com/
 Planned data to be gathered:
   - Games
